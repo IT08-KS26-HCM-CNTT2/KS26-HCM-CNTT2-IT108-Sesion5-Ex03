@@ -1,0 +1,32 @@
+
+BÀI 3: KIẾN TRÚC SƯ HẠ TẦNG SERVER CHUYÊN NGHIỆP (POWERSHELL)
+PHẦN 1: SƠ ĐỒ LUỒNG IPO (INPUT - PROCESS - OUTPUT)
+1. INPUT (Đầu vào):
+   - Yêu cầu khởi tạo cấu trúc thư mục dự án smart-farm trên server Windows.
+   - Các file cấu hình cần khởi tạo: config.json, sensors.py, .env
+   - Yêu cầu sao lưu (backup) mã nguồn.
+2. PROCESS (Xử lý):
+   - Bước 1: Dùng lệnh PowerShell khởi tạo đệ quy cây thư mục lồng nhau (smart-farm\data\logs và smart-farm\code).
+   - Bước 2: Khởi tạo đồng thời 3 file cấu hình trong thư mục smart-farm\code.
+   - Bước 3: Thực hiện sao chép đệ quy toàn bộ thư mục code sang thư mục backup\code_v1.
+3. OUTPUT (Đầu ra):
+   - Cấu trúc thư mục hạ tầng hoàn chỉnh trên server:
+     smart-farm/
+     ├── data/
+     │   └── logs/
+     ├── code/
+     │   ├── config.json
+     │   ├── sensors.py
+     │   └── .env
+     └── backup/
+         └── code_v1/
+             ├── config.json
+             ├── sensors.py
+             └── .env
+PHẦN 2: DANH SÁCH CÁC CÂU LỆNH POWERSHELL THỰC THI
+1. Tạo cây thư mục lồng nhau 'smart-farm\data\logs' và 'smart-farm\code' bằng 1 dòng lệnh:
+   New-Item -ItemType Directory -Force -Path "smart-farm\data\logs", "smart-farm\code"
+2. Tạo cùng lúc 3 file cấu hình ('config.json', 'sensors.py', '.env') trong thư mục 'smart-farm\code' bằng 1 dòng lệnh:
+   New-Item -ItemType File -Path "smart-farm\code\config.json", "smart-farm\code\sensors.py", "smart-farm\code\.env"
+3. Sao chép toàn bộ thư mục 'code' sang 'backup\code_v1' (bao gồm cả thư mục và các file bên trong):
+   Copy-Item -Path "smart-farm\code" -Destination "smart-farm\backup\code_v1" -Recurse -Force
